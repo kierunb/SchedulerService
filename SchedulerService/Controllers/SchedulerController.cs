@@ -36,7 +36,7 @@ namespace SchedulerService.Controllers
 
             var simpleJob = new SimpleJob();
 
-            RecurringJob.AddOrUpdate(() => Console.WriteLine("Recurring!"), Cron.Minutely);
+            RecurringJob.AddOrUpdate(() => simpleJob.Execute(), Cron.Minutely);
 
             return Ok($"recurring job scheduled");
         }

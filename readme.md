@@ -1,7 +1,7 @@
 ## Demo of simple scheduler service
 
 It's a Windows service built using .NET Framework 4.7.2 and few components listed below.
-It uses OWIN hosted WebAPI for communication.
+It uses OWIN hosted WebAPI for communication and scheduler management.
 
 **Technology stack**: 
 - TopShelf - simplifies windows service development
