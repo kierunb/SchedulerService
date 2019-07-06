@@ -16,12 +16,7 @@ namespace SchedulerService
             {
                 x.UseNLog();
 
-                x.Service<HostService>(s =>
-                {
-                    s.ConstructUsing(name => new HostService());
-                    s.WhenStarted(tc => tc.Start());
-                    s.WhenStopped(tc => tc.Stop());
-                });
+                x.Service<HostService>(hostSettings => new HostService());
 
                 x.RunAsLocalSystem();
                 //x.RunAs("user", "password");
@@ -30,13 +25,16 @@ namespace SchedulerService
                 x.SetServiceName("Scheduler Service");
                 x.SetDescription("Scheduler Service");
 
+                x.SetStartTimeout(TimeSpan.FromMinutes(5));
+                x.SetStopTimeout(TimeSpan.FromMinutes(5));
+
                 x.EnableServiceRecovery(r =>
                 {
                     r.RestartService(1);
                 });
             });
 
-            // additional configuration:
+            // additional configuration options:
             // http://docs.topshelf-project.com/en/latest/configuration/config_api.html
 
 

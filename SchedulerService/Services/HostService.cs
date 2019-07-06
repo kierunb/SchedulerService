@@ -10,16 +10,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Topshelf;
 
 namespace SchedulerService.Services
 {
-    public class HostService
+    public class HostService : ServiceControl
     {
 
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private IDisposable _host;
 
-        public void Start()
+
+        public bool Start(HostControl hostControl)
         {
             try
             {
@@ -32,17 +34,27 @@ namespace SchedulerService.Services
 
                 _logger.Info("WebHost with HangFire has started");
                 _logger.Info($"Dashboard is available at http://localhost:{port}/hangfire");
+                return true;
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "error during starting web host");
+                return false;
             }
-
         }
 
-        public void Stop()
+        public bool Stop(HostControl hostControl)
         {
-            _host?.Dispose();
+            try
+            {
+                _host?.Dispose();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
     }
 
